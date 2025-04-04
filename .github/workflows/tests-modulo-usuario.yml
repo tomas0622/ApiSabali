@@ -42,14 +42,14 @@ jobs:
         run: |
           echo "Waiting for SQL Server to be ready..."
           for i in {1..30}; do
-            /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "123" -Q "SELECT 1" && break
+            /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "Tomas0622*" -Q "SELECT 1" && break
             sleep 2
           done
 
       - name: Run database setup
         run: |
           echo "Setting up database..."
-          /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "123" -Q "CREATE DATABASE SabaliFlow"
+          /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "Tomas0622*" -Q "CREATE DATABASE SabaliFlow"
 
       - name: Run Unit Tests
         run: npm run test:unit
