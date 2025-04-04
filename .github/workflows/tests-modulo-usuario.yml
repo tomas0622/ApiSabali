@@ -1,0 +1,61 @@
+name: Test Pipeline
+
+on:
+  push:
+    branches:
+      - 3-casos-de-prueba
+  pull_request:
+    branches:
+      - 3-casos-de-prueba
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        env:
+          ACCEPT_EULA: "Y"
+          SA_PASSWORD: "123"
+        ports:
+          - 1433:1433
+        options: >-
+          --health-cmd "exit 0"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Wait for SQL Server to be ready
+        run: |
+          echo "Waiting for SQL Server to be ready..."
+          for i in {1..30}; do
+            /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "123" -Q "SELECT 1" && break
+            sleep 2
+          done
+
+      - name: Run database setup
+        run: |
+          echo "Setting up database..."
+          /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "123" -Q "CREATE DATABASE SabaliFlow"
+
+      - name: Run Unit Tests
+        run: npm run test:unit
+
+      - name: Run Integration Tests
+        run: npm run test:integration
+
+      - name: Run Smoke Tests
+        run: npm run test:smoke
