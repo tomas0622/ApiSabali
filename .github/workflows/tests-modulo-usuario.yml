@@ -27,19 +27,22 @@ jobs:
           --health-retries 3
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Install SQL Server tools
+      - name: Configurar repositorio de Microsoft
         run: |
-          sudo apt-get update
-          sudo apt-get install -y curl apt-transport-https
           curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-          curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
+          sudo add-apt-repository "$(curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list)"
           sudo apt-get update
-          sudo apt-get install -y mssql-tools unixodbc-dev
+          
+      - name: Instalar mssql-tools
+        run: sudo apt-get install -y mssql-tools
+
+      - name: Configurar PATH para mssql-tools
+        run: |
           echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
           source ~/.bashrc
+          
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
