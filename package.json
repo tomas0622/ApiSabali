@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "tsc": "tsc",
-    "start": "ts-node-dev src/index.ts",
-    "test": "jest"
+  "test": "jest",
+  "test:unit": "jest tests/unit",
+  "test:integration": "jest tests/integration",
+  "test:smoke": "jest tests/smoke"
   },
   "keywords": [],
   "author": "",
