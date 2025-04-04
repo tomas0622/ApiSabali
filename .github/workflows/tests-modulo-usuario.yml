@@ -1,0 +1,81 @@
+name: Test Pipeline
+
+on:
+  push:
+    branches:
+      - 3-casos-de-prueba
+  pull_request:
+    branches:
+      - 3-casos-de-prueba
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        env:
+          SA_PASSWORD: "Tomas0622*"
+          ACCEPT_EULA: "Y"
+        ports:
+          - 1433:1433
+        options: >-
+          --health-cmd "exit 0"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 3
+
+    steps:
+      - name: Configurar repositorio de Microsoft
+        run: |
+          curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+          sudo add-apt-repository "$(curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list)"
+          sudo apt-get update
+          
+      - name: Instalar mssql-tools
+        run: sudo apt-get install -y mssql-tools
+
+      - name: Configurar PATH para mssql-tools
+        run: |
+          echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+          source ~/.bashrc
+          
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Verificar versiones de Node, npm y Jest
+        run: |
+          node -v
+          npm -v
+          npx jest --version
+      
+      - name: Wait for SQL Server to be ready
+        run: |
+          echo "Waiting for SQL Server to be ready..."
+          for i in {1..30}; do
+            /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "Tomas0622*" -Q "SELECT 1" && break
+            sleep 2
+          done
+
+      - name: Run database setup
+        run: |
+          echo "Setting up database..."
+          /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "Tomas0622*" -Q "CREATE DATABASE SabaliFlow"
+
+      - name: Run Unit Tests
+        run: npm run test:unit
+
+      - name: Run Integration Tests
+        run: npm run test:integration
+
+      - name: Run Smoke Tests
+        run: npm run test:smoke
