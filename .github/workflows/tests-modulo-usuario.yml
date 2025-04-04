@@ -56,8 +56,8 @@ jobs:
         run: |
           node -v
           npm -v
-          npx jest --version
           chmod +x ./node_modules/.bin/jest  # Asegurar permisos de ejecución
+          npx jest --version
       
       - name: Wait for SQL Server to be ready
         run: |
