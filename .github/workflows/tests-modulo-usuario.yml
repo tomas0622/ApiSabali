@@ -52,6 +52,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Verificar versiones de Node, npm y Jest
+        run: |
+          node -v
+          npm -v
+          npx jest --version
+      
       - name: Wait for SQL Server to be ready
         run: |
           echo "Waiting for SQL Server to be ready..."
