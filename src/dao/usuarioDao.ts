@@ -5,7 +5,7 @@ import { getTestConnection } from "../../tests/connection.test";
 export const listar = async (): Promise<Usuario[]> => {
     try {
         let tsql = "SELECT * FROM Usuario";
-        const pool = await GetConnection();
+        const pool = await getTestConnection();
         let rs = await pool.query<Usuario>(tsql)
         if (rs) {
             return rs.recordset;
