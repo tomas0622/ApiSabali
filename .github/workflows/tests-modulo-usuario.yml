@@ -71,6 +71,7 @@ jobs:
         run: |
           echo "Setting up database..."
           /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "Tomas0622*" -Q "CREATE DATABASE SabaliFlow"
+          /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "Tomas0622*" -Q "USE SabaliFlow; IF OBJECT_ID('Usuario', 'U') IS NULL CREATE TABLE Usuario (Id INT PRIMARY KEY IDENTITY(1,1), username NVARCHAR(50) NOT NULL, contraseña NVARCHAR(50) NOT NULL, rol NVARCHAR(50) NOT NULL);"
 
       - name: Run Unit Tests
         run: npm run test:unit
