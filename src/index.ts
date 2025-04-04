@@ -18,6 +18,10 @@ app.use('/api/proveedor', proveedorRouter);
 app.use('/api/usuario', usuarioRouter);
 app.use('/api/venta', ventaRouter)
 
-app.listen(PORT, () => {
-    console.log(`Servidor escucha el puerto ${PORT}`)
-})
+export {app};
+
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(PORT, () => {
+        console.log(`Servidor escuchando en el puerto ${PORT}`);
+    });
+}

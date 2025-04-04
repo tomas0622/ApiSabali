@@ -10,7 +10,7 @@ export const listarUsuarios = async () : Promise<Usuario[]> => {
     }
 }
 
-export const crearUsuario = async (usuario:Usuario): Promise<Boolean> =>{
+export const crearUsuario = async (usuario:Usuario): Promise<Usuario> =>{
     try {
         return await usuarioDao.Agregar(usuario);
     } catch (error) {

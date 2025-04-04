@@ -15,16 +15,18 @@ router.get('/', (req, res) => {
 
 router.post('/add', (req, res) => {
     usuarioController.crearUsuario(req.body as Usuario)
-        .then((f) => {
-            if (f)
-                res.status(201).send();
-            else
+        .then((usuarioCreado) => {
+            if (usuarioCreado) {
+                // Devuelve el usuario creado con un código HTTP 201
+                res.status(201).json(usuarioCreado);
+            } else {
                 res.status(500).send();
+            }
         })
         .catch((e) => {
             console.log(e);
             res.status(500).send();
-        })
+        });
 });
 
 router.delete('/:id', (req, res) => {

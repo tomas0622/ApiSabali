@@ -16,7 +16,9 @@
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
     "@types/mssql": "^9.1.5",
+    "@types/supertest": "^6.0.3",
     "jest": "^29.7.0",
+    "supertest": "^7.1.0",
     "ts-jest": "^29.3.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.6.2"
@@ -24,6 +26,9 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.0",
-    "mssql": "^11.0.1"
+    "mssql": "^11.0.1",
+    "reflect-metadata": "^0.2.2",
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.22"
   }
 }
