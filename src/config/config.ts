@@ -1,6 +1,6 @@
 export const sqlConfig = {
     user:'sa',
-    password:'123',
+    password:'Tomas0622*',
     database:'SabaliFlow',
     server:'localhost',
     options:{
