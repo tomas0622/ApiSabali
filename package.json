@@ -3,21 +3,23 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-  "start": "ts-node-dev --respawn --transpile-only src/index.ts",
-  "test": "jest",
-  "test:unit": "jest tests/unit",
-  "test:integration": "jest tests/integration",
-  "test:smoke": "jest tests/smoke"
+    "start": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "test": "jest",
+    "test:unit": "jest tests/unit",
+    "test:integration": "jest tests/integration",
+    "test:smoke": "jest tests/smoke"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@playwright/test": "^1.52.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
     "@types/mssql": "^9.1.5",
+    "@types/node": "^22.15.3",
     "@types/supertest": "^6.0.3",
     "jest": "^29.7.0",
     "supertest": "^7.1.0",
