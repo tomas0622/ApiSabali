@@ -13,6 +13,6 @@ test('CT-LOGIN-001: Verificar contenido en la pantalla de Login', async ({ page 
   await expect(inputPassword).toBeVisible();
 
   // Paso 4: Verificar que el botón "Iniciar sesión" existe
-  const botonLogin = page.getByRole('button', { name: /iniciar sesion/i }); 
+  const botonLogin = page.getByRole('button', { name: /Iniciar Sesion/i }); 
   await expect(botonLogin).toBeVisible();
 });
