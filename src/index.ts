@@ -10,7 +10,12 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cors());
-const PORT = 3000;
+// Forzar charset UTF-8 en respuestas JSON para asegurar que tildes/ñ se muestren correctamente
+app.use((req, res, next) => {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    next();
+});
+const PORT = Number(process.env.PORT) || 3000;
 
 app.use('/api/insumo', insumoRouter);
 app.use('/api/cliente', clienteRouter);

@@ -1,6 +1,6 @@
 export interface Usuario {
     id:number;
     username:string;
-    contraseña:string;
+    contrasena:string;
     rol:string;
 }

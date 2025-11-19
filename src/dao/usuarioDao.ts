@@ -19,7 +19,7 @@ export const listar = async (): Promise<Usuario[]> => {
 
 export const Agregar = async (usuario: Usuario): Promise<boolean> => {
     try {
-        let tsql = `INSERT INTO Usuario(username, contraseña, rol) VALUES('${usuario.username}','${usuario.contraseña}','${usuario.rol}')`
+        let tsql = `INSERT INTO Usuario(username, contrasena, rol) VALUES('${usuario.username}','${usuario.contrasena}','${usuario.rol}')`
         const pool = await GetConnection();
         let rs = await pool.query(tsql)
         let insertMovimiento = `INSERT INTO Movimiento (tabla, idRegistro, operacion) VALUES ('Usuario', ${usuario.id}, 'INSERT');`;
@@ -53,7 +53,7 @@ export const Eliminar = async (id: number): Promise<boolean> => {
 
 export const Editar = async (us: Usuario, id: number): Promise<boolean> => {
     try {
-        let tsql = `UPDATE Usuario SET username = '${us.username}', contraseña = '${us.contraseña}', rol = '${us.rol}' WHERE id = ${id};`
+        let tsql = `UPDATE Usuario SET username = '${us.username}', contrasena = '${us.contrasena}', rol = '${us.rol}' WHERE id = ${id};`
         const pool = await GetConnection();
         let rs = await pool.query(tsql)
         let insertMovimiento = `INSERT INTO Movimiento (tabla, idRegistro, operacion) VALUES ('Usuario', ${id}, 'UPDATE');`;
